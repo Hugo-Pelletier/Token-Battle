@@ -1,3 +1,7 @@
-import Board
+import Board as b
 
-print(Board.hello())
+print("WELCOME TO DISK BATTLE")
+
+
+b.play(True, 5)
+print(b.board)
