@@ -1,3 +1,4 @@
+import GameConsole as console
 BOARD_ROWS = 6
 BOARD_COLUMN = 7
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -20,8 +21,13 @@ def clearBoard():
 def canPlay(columnIndex): #return the cell free in this column or -1 if no cell free
     for i in range (len(boardColumn)):
         if board[columnIndex][i] == "0":
+            return True
+    return False
+
+def playWhatRow(columnIndex): #return the cell free in this column or -1 if no cell free
+    for i in range (len(boardColumn)):
+        if board[columnIndex][i] == "0":
             return i
-    return -1
 
 def whoPlay():
     if whoPlay == "RED":
@@ -30,17 +36,22 @@ def whoPlay():
         whoPlay = "RED"
     return(whoPlay)
 
+def findColumnIndex(letter):
+    for c in range (len(alphabet)):
+        if letter == alphabet[c]:
+            return c 
+
 def play( isRed, columnIndex): 
-    boardCol = ""
+    boardCol = []
     for i in range (len(board[columnIndex])):
-        if i < canPlay(columnIndex) or i <= 0:
+        if i < playWhatRow(columnIndex):
             boardCol += board[columnIndex][i]
-        elif isRed and i == canPlay(columnIndex):
-            boardCol += "R"
-        elif not isRed and i == canPlay(columnIndex):
-            boardCol += "Y"
+        elif isRed and i == playWhatRow(columnIndex) and canPlay(columnIndex):
+            boardCol.append("R")
+        elif not isRed and i == playWhatRow(columnIndex) and i == canPlay(columnIndex):
+            boardCol.append("Y")
         else:
-            boardCol += "0"
+            boardCol.append("0")
     board[columnIndex] = boardCol
 
 def getBoardStatus(): #Return the board status
@@ -50,3 +61,10 @@ def getBoardStatus(): #Return the board status
     #BOARD_FULL The board is full, but no winner
     return boardStatus
 
+console.welcome()
+while getBoardStatus == "ON_PROGRESS":
+    if whoplay == "YELLOW":
+        play(False, input("Player Yellow, enter column to play: "))
+    else:
+        play(True, input("Player Red, enter column to play: "))
+    print(board)
