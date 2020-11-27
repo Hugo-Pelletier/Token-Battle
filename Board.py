@@ -61,10 +61,15 @@ def getBoardStatus(): #Return the board status
     #BOARD_FULL The board is full, but no winner
     return boardStatus
 
+def getIndexOfLetter(letter):
+    for index in range (BOARD_COLUMN):
+        if board[index][0] == letter:
+            return index
+
 console.welcome()
-while getBoardStatus == "ON_PROGRESS":
+while getBoardStatus() == "ON_PROGRESS":
     if whoplay == "YELLOW":
-        play(False, input("Player Yellow, enter column to play: "))
+        play(False, getIndexOfLetter(input("Player Yellow, enter column to play: ")))
     else:
-        play(True, input("Player Red, enter column to play: "))
-    print(board)
+        play(True,  getIndexOfLetter(input("Player Red, enter column to play: ")))
+    console.printBoard(board)
