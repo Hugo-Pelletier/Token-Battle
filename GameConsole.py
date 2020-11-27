@@ -5,7 +5,7 @@ def welcome():
 
 def printBoard(board):
     result = ""
-    for i in range (len(board)):
+    for i in range (len(board)-1, -1, -1):
         for j in range (len(board[0])):
             result += board[j][i] + " "
         result += "\n"

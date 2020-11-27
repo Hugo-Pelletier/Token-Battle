@@ -2,8 +2,7 @@ import GameConsole as console
 BOARD_ROWS = 6
 BOARD_COLUMN = 7
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-boardStatus = "ON_PROGRESS"
-whoplay = "RED"
+player = True
     
 board = []
 for y in range (BOARD_COLUMN):
@@ -24,12 +23,12 @@ def canPlay(columnIndex): #return the cell free in this column or -1 if no cell 
             return True
     return False
 
-def playWhatRow(columnIndex): #return the cell free in this column or -1 if no cell free
+def playWhatRow(columnIndex): #return the cell free in this column 
     for i in range (len(boardColumn)):
         if board[columnIndex][i] == "0":
             return i
 
-def whoPlay():
+def whoWillPlay(whoPlay):
     if whoPlay == "RED":
         whoPlay = "YELLOW"
     else:
@@ -48,7 +47,7 @@ def play( isRed, columnIndex):
             boardCol += board[columnIndex][i]
         elif isRed and i == playWhatRow(columnIndex) and canPlay(columnIndex):
             boardCol.append("R")
-        elif not isRed and i == playWhatRow(columnIndex) and i == canPlay(columnIndex):
+        elif not isRed and i == playWhatRow(columnIndex) and canPlay(columnIndex):
             boardCol.append("Y")
         else:
             boardCol.append("0")
@@ -59,7 +58,19 @@ def getBoardStatus(): #Return the board status
     #RED_WON RED player has won
     #YELLOW_WON YELLOW player has won
     #BOARD_FULL The board is full, but no winner
+    if isBoardFull() == True :
+        boardStatus = "BOARD_FULL"
+    else:
+        boardStatus = "ON_PROGRESS"
     return boardStatus
+
+def isBoardFull():
+    for i in range (len(board)):
+        for j in range (len(board[0])):
+            if board[j][i] == "0":
+                return False
+    return True
+
 
 def getIndexOfLetter(letter):
     for index in range (BOARD_COLUMN):
@@ -68,8 +79,10 @@ def getIndexOfLetter(letter):
 
 console.welcome()
 while getBoardStatus() == "ON_PROGRESS":
-    if whoplay == "YELLOW":
-        play(False, getIndexOfLetter(input("Player Yellow, enter column to play: ")))
+    player = whoWillPlay(player)
+    if player == "YELLOW":
+        play(False, getIndexOfLetter(str(input("Player Yellow, enter column to play: ")).upper()))
     else:
-        play(True,  getIndexOfLetter(input("Player Red, enter column to play: ")))
+        play(True,  getIndexOfLetter(str(input("Player Red, enter column to play: ")).upper()))
     console.printBoard(board)
+print("c'est full hoho")
