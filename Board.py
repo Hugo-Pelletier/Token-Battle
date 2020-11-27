@@ -54,15 +54,36 @@ def play( isRed, columnIndex):
     board[columnIndex] = boardCol
 
 def getBoardStatus(): #Return the board status
-    #ON_PROGRESS No winner for now
-    #RED_WON RED player has won
-    #YELLOW_WON YELLOW player has won
-    #BOARD_FULL The board is full, but no winner
     if isBoardFull() == True :
-        boardStatus = "BOARD_FULL"
+        boardStatus = "BOARD_FULL"    #BOARD_FULL The board is full, but no winner
+        console.boardFull()
+    elif playerWonRow(True):
+        boardStatus = "RED_WON"    #RED_WON RED player has won
+        console.redWon()
+    elif playerWonRow(False):
+        boardStatus = "YELLOW_WON"    #YELLOW_WON YELLOW player has won
+        console.yellowWon()
     else:
-        boardStatus = "ON_PROGRESS"
+        boardStatus = "ON_PROGRESS"    #ON_PROGRESS No winner for now
+        print("Test")
     return boardStatus
+
+def playerWonRow(isRed):
+    for i in range (len(board)):
+        rednonestop = 0
+        yellownonestop = 0
+        for j in range (len(board[0])):
+            if board[j][i] == "R" and isRed:
+                rednonestop +=1
+            elif board[j][i] == "Y" and not isRed:
+                yellownonestop += 1
+            else:
+                rednonestop = 0
+                yellownonestop = 0
+            if rednonestop >= 4 or yellownonestop >= 4:
+                return True
+    return False
+
 
 def isBoardFull():
     for i in range (len(board)):
@@ -85,4 +106,3 @@ while getBoardStatus() == "ON_PROGRESS":
     else:
         play(True,  getIndexOfLetter(str(input("Player Red, enter column to play: ")).upper()))
     console.printBoard(board)
-print("c'est full hoho")
