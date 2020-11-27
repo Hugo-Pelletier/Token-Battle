@@ -5,19 +5,19 @@ alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 player = True
 lastColumnPlay = "A"
 board = []
+
 for y in range (BOARD_COLUMN):
     boardColumn = []
     boardColumn.append(alphabet[y])
     for x in range (BOARD_ROWS):
         boardColumn.append("0")
     board.append(boardColumn)
-print(board)
 
 def clearBoard():
     for elements in (board):
         board[elements].pop
     
-def canPlay(columnIndex): #return the cell free in this column or -1 if no cell free
+def canPlay(columnIndex): 
     for i in range (len(boardColumn)):
         if board[columnIndex][i] == "0":
             return True
@@ -147,7 +147,7 @@ console.welcome()
 while getBoardStatus() == "ON_PROGRESS":
     player = whoWillPlay(player)
     if player == "YELLOW":
-        play(False, getIndexOfLetter(str(input("Player Yellow, enter column to play: ")).upper()))
+        play(False, getIndexOfLetter(console.inputYellow()))
     else:
-        play(True,  getIndexOfLetter(str(input("Player Red, enter column to play: ")).upper()))
+        play(True,  getIndexOfLetter(console.inputRed()))
     console.printBoard(board)

@@ -17,3 +17,9 @@ def redWon():
 
 def boardFull():
     print("The board is full !")
+
+def inputYellow():
+    return str(input("Player Yellow, enter column to play: ")).upper()
+
+def inputRed():
+    return str(input("Player Red, enter column to play: ")).upper()
