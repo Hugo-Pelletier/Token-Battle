@@ -57,10 +57,10 @@ def getBoardStatus(): #Return the board status
     if isBoardFull() == True :
         boardStatus = "BOARD_FULL"    #BOARD_FULL The board is full, but no winner
         console.boardFull()
-    elif playerWonRow(True):
+    elif playerWonRow(True) or playerWonColumn(True):
         boardStatus = "RED_WON"    #RED_WON RED player has won
         console.redWon()
-    elif playerWonRow(False):
+    elif playerWonRow(False) or playerWonColumn(False):
         boardStatus = "YELLOW_WON"    #YELLOW_WON YELLOW player has won
         console.yellowWon()
     else:
@@ -84,6 +84,22 @@ def playerWonRow(isRed):
                 return True
     return False
 
+def playerWonColumn(isRed):
+    for i in range (len(board)):
+        rednonestop = 0
+        yellownonestop = 0
+        currentColumn = board[i]
+        for j in range (len(board[0])):
+            if currentColumn[j] == "R" and isRed:
+                rednonestop +=1
+            elif currentColumn[j] == "Y" and not isRed:
+                yellownonestop += 1
+            else:
+                rednonestop = 0
+                yellownonestop = 0
+            if rednonestop >= 4 or yellownonestop >= 4:
+                return True
+    return False
 
 def isBoardFull():
     for i in range (len(board)):
